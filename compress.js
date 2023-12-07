@@ -24,6 +24,10 @@ function compressObject(obj) {
   return result;
 }
 
+function reverseString(str) {
+  return str.split('').reverse().join('');
+}
+
 export default function HyperJSONMinify(obj) {
   return reverseString(compressObject)
 }
