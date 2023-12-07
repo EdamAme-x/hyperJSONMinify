@@ -12,7 +12,7 @@ function compressObject(obj) {
     } else if (value === true) {
       compressedValue = '$';
     } else if (value === false) {
-      compressedValue = '%';
+      compressedValue = '&';
     } else if (typeof value === 'object' && Object.keys(value).length === 0) {
       compressedValue = '@';
     } else if (typeof value === 'object' && Object.keys(value).length > 0) {
