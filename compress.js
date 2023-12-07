@@ -36,6 +36,50 @@ export default function HyperJSONMinify(obj) {
   return reverseString(compressObject(obj))
 }
 
+export default function HyperJSONDenify(str) {
+  const reversedStr = reverseString(str);
+
+  const decodedObject = reversedStr.split(',').reduce((acc, pair) => {
+    const [key, compressedValue] = pair.split(':');
+    let value;
+
+    switch (compressedValue) {
+      case '%':
+        value = [];
+        break;
+      case '*':
+        value = "";
+        break;
+      case '+':
+        value = '';
+        break;
+      case '$':
+        value = true;
+        break;
+      case '&':
+        value = false;
+        break;
+      case '@':
+        value = {};
+        break;
+      default:
+        if (compressedValue.startsWith('|') && compressedValue.endsWith('|')) {
+          const innerStr = compressedValue.slice(1, -1);
+          value = HyperJSONDenify(innerStr);
+        } else {
+          value = JSON.parse(compressedValue);
+        }
+        break;
+    }
+
+    acc[key] = value;
+    return acc;
+  }, {});
+
+  return decodedObject;
+}
+
+
 // function calcRatio(original, compressed) {
 //   const originalLength = original.length;
 //   const compressedLength = compressed.length;
@@ -43,7 +87,7 @@ export default function HyperJSONMinify(obj) {
 //   return ratio.toFixed(2);
 // }
 //
-// 例
+// // 例
 // const obj = {
 //   "a": "a",
 //   "b": '',
