@@ -4,11 +4,15 @@ function compressObject(obj) {
     let compressedValue;
 
     if (Array.isArray(value) && value.length === 0) {
-      compressedValue = '%'; 
+      compressedValue = '%';
     } else if (value === "") {
       compressedValue = '*';
     } else if (value === '') {
-      compressedValue = '+'; 
+      compressedValue = '+';
+    } else if (value === true) {
+      compressedValue = '$';
+    } else if (value === false) {
+      compressedValue = '%';
     } else if (typeof value === 'object' && Object.keys(value).length === 0) {
       compressedValue = '@';
     } else if (typeof value === 'object' && Object.keys(value).length > 0) {
@@ -24,12 +28,8 @@ function compressObject(obj) {
   return result;
 }
 
-function reverseString(str) {
-  return str.split('').reverse().join('');
-}
-
 export default function HyperJSONMinify(obj) {
-  return reverseString(compressObject)
+  return reverseString(compressObject(obj))
 }
 
 // function calcRatio(original, compressed) {
