@@ -1,0 +1,2 @@
+# hyperJSONMinify
+on javascript
