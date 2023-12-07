@@ -66,6 +66,9 @@ export function HyperJSONDenify(str) {
         if (compressedValue.startsWith('|') && compressedValue.endsWith('|')) {
           const innerStr = compressedValue.slice(1, -1);
           value = HyperJSONDenify(innerStr);
+        } else if (compressedValue.startsWith('|')) {
+          // Fix for strings starting with '|'
+          value = compressedValue.slice(1);
         } else {
           value = JSON.parse(compressedValue);
         }
