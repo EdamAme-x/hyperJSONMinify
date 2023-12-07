@@ -32,11 +32,11 @@ function reverseString(str) {
   return str.split('').reverse().join('');
 }
 
-export default function HyperJSONMinify(obj) {
+export function HyperJSONMinify(obj) {
   return reverseString(compressObject(obj))
 }
 
-export default function HyperJSONDenify(str) {
+export function HyperJSONDenify(str) {
   const reversedStr = reverseString(str);
 
   const decodedObject = reversedStr.split(',').reduce((acc, pair) => {
